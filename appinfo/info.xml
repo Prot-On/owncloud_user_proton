@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<info>
+	<id>user_proton</id>
+	<name>Prot-On User Backend</name>
+	<description>Integrate with Prot-On server</description>
+	<licence>AGPL</licence>
+	<author>Ramiro Aparicio</author>
+	<require>4.93</require>
+	<shipped>false</shipped>
+	<types>
+		<authentication/>
+	</types>
+</info>
