@@ -1,3 +1,3 @@
 [submodule "common"]
 	path = common
-	url = git@github.com:Prot-On/owncloud_proton_common.git
+	url = https://github.com/Prot-On/owncloud_proton_common.git
