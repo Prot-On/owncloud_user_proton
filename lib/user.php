@@ -8,9 +8,8 @@
 use \OCA\Proton\Util;
  
 class OC_USER_PROTON extends OC_User_Backend{
-	private $host;
-	private $secure;
-	private $protocol;
+	private static $username; //Hooks uses static functions so this should be static
+    private $completeName;
 
 	/**
 	 * @brief Check if the password is correct
@@ -34,11 +33,17 @@ class OC_USER_PROTON extends OC_User_Backend{
         if (false) { //TODO Change this to check hosting
             return false;
         }
-		Util::storeCompleteName($info['completename']);
+		$this->completeName = $info['completename'];
+        self::$username = $info['username'];
 		Util::storePassword($password);
-        \OC_User::setUserid($info['username']);
 		return $uid;
 	}
+
+    public static function postLogin($uid, $password) {
+        if (isset(self::$username)) {
+            \OC_User::setUserid(self::$username);                   
+        }
+    }
 
 	public function userExists($uid) {
 		return true;
@@ -46,8 +51,8 @@ class OC_USER_PROTON extends OC_User_Backend{
 	
 	public function getDisplayName($uid) {
 		Util::log("getDisplayName: " . $uid);
-		if ($_SESSION['user_id'] === $uid && Util::getCompleteName() != null) {
-			return Util::getCompleteName();
+		if (\OC_User::getUser() === $uid && !empty($this->completeName)) {
+			return $this->completeName;
 		} else {
 			return $uid;
 		}

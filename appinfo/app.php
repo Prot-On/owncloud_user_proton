@@ -17,9 +17,12 @@ OC_APP::registerAdmin('user_proton', 'settings');
 
 OC_User::registerBackend("ProtOn");
 OC_User::useBackend( "ProtOn" );
+\OCP\Util::connectHook('OC_User', 'post_login', 'OC_USER_PROTON', 'postLogin');
 
 \OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Proton\Share', 'postShared');
 \OCP\Util::connectHook('OCP\Share', 'post_unshare', 'OCA\Proton\Share', 'postUnshare');
 
-OC_App::registerLogIn(array('href' => \OCP\Util::linkToRoute( 'proton_oauth'), 'name' => 'Prot-On OAuth'));
+if (\OCA\Proton\Util::isOAuthConfigured()) {
+    OC_App::registerLogIn(array('href' => \OCP\Util::linkToRoute( 'proton_oauth'), 'name' => 'Prot-On OAuth'));
+}
 
