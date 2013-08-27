@@ -9,15 +9,18 @@ if (!OCP\App::isEnabled('files_proton')) {
 	OC::$CLASSPATH['OCA\Proton\BearerPest']='user_proton/common/lib/bearer_pest.php';
 }
 	
-OC::$CLASSPATH['OC_USER_PROTON']='user_proton/lib/user.php';
+OC::$CLASSPATH['OCA\Proton\User']='user_proton/lib/user.php';
+OC::$CLASSPATH['OCA\Proton\Group']='user_proton/lib/group.php';
 OC::$CLASSPATH['OCA\Proton\Share'] = 'user_proton/lib/share.php';
 OC::$CLASSPATH['OCA\Proton\OAuth'] = 'user_proton/lib/oauth.php';
 
 OC_APP::registerAdmin('user_proton', 'settings');
 
-OC_User::registerBackend("ProtOn");
-OC_User::useBackend( "ProtOn" );
-\OCP\Util::connectHook('OC_User', 'post_login', 'OC_USER_PROTON', 'postLogin');
+if (\OCA\Proton\Util::isApiConfigured()) {
+    OC_User::useBackend( new \OCA\Proton\User() );
+    OC_Group::useBackend( new \OCA\Proton\Group() );
+    \OCP\Util::connectHook('OC_User', 'post_login', 'OC_USER_PROTON', 'postLogin');    
+}
 
 \OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Proton\Share', 'postShared');
 \OCP\Util::connectHook('OCP\Share', 'post_unshare', 'OCA\Proton\Share', 'postUnshare');

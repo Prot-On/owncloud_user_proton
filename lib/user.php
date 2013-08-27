@@ -1,15 +1,9 @@
 <?php
-/**
- * Copyright (c) 2012 Robin Appelman <icewind@owncloud.com>
- * This file is licensed under the Affero General Public License version 3 or
- * later.
- * See the COPYING-README file.
- */
-use \OCA\Proton\Util;
- 
-class OC_USER_PROTON extends OC_User_Backend{
+
+namespace OCA\Proton;
+
+class User extends \OC_User_Backend{
 	private static $username; //Hooks uses static functions so this should be static
-    private $completeName;
 
 	/**
 	 * @brief Check if the password is correct
@@ -33,7 +27,7 @@ class OC_USER_PROTON extends OC_User_Backend{
         if (false) { //TODO Change this to check hosting
             return false;
         }
-		$this->completeName = $info['completename'];
+		Util::storeCompleteName($info['completename']);
         self::$username = $info['username'];
 		Util::storePassword($password);
 		return $uid;
@@ -51,15 +45,15 @@ class OC_USER_PROTON extends OC_User_Backend{
 	
 	public function getDisplayName($uid) {
 		Util::log("getDisplayName: " . $uid);
-		if (\OC_User::getUser() === $uid && !empty($this->completeName)) {
-			return $this->completeName;
+		if (\OC_User::getUser() === $uid && Util::getCompleteName() != null) {
+			return Util::getCompleteName();
 		} else {
 			return $uid;
 		}
 	}
 	
 	public function getUsers($search = '', $limit = null, $offset = null) {	
-		Util::log('Searching for users: '.$search);
+		Util::log('Searching for users: '.$search.' limit '.$limit.' offset '.$offset);
 		try {
 			$pest = Util::getPest();
 		} catch (\Exception $e) { //Only triggered when there is not auth stored
