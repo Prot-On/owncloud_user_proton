@@ -4,23 +4,6 @@ namespace OCA\Proton;
 
 class User extends \OC_User_Backend{
 	private static $userId; //Hooks uses static functions so this should be static
-    private $userNameCache;
-    
-    public function __construct() {
-        $this->userNameCache = \OC_Cache::getGlobalCache();        
-    }     
-    
-    protected function getKey($uid) {
-        return hash( 'sha1', 'PROTON_USER_NAMES_'.$uid );
-    }
-    
-    protected function storeDisplayName($uid, $displayName) {
-        $this->userNameCache->set($this->getKey($uid), $displayName, 60*60*24);
-    } 
-    
-    protected function _getDisplayName($uid) {
-        return $this->userNameCache->get($this->getKey($uid));
-    }
     
 	/**
 	 * @brief Check if the password is correct
@@ -46,8 +29,6 @@ class User extends \OC_User_Backend{
             Util::log('The user '. $uid .' can not use OwnCloud due to Hosting retrictions');
             return false;
         }
-		Util::storeCompleteName($info['completename']);
-        $this->storeDisplayName($info['id'], $info['completename']);
         self::$userId = $info['id'];
 		Util::storePassword($password);
 		return $uid;
@@ -65,28 +46,34 @@ class User extends \OC_User_Backend{
 	
 	public function getDisplayName($uid) {
 		Util::log("getDisplayName: " . $uid);
-		if (\OC_User::getUser() === $uid && Util::getCompleteName() != null) {
-			return Util::getCompleteName();
-		} else {
-			$display = $this->_getDisplayName($uid);
-            return $display;
-		}
+        $query = Database::prepare("SELECT completeName FROM user WHERE idUser = ?");
+        if (!$query) {
+            return null;
+        }
+        $query->execute(array($uid));
+        $row = $query->fetch();
+        return $row['completeName'];    
 	}
 
 	public function getDisplayNames($search = '', $limit = null, $offset = null) {
 		Util::log('Searching for users: '.$search.' limit '.$limit.' offset '.$offset);
-		try {
-			$pest = Util::getPest();
-		} catch (\Exception $e) { //Only triggered when there is not auth stored
-			Util::log('Exception: '.$e->getMessage());
-			return array();
-		}
-		$thing = $pest->get('/users/?filter='.$search);
-		$users = json_decode($thing, true);
-		$result = array();
-		foreach ( $users as $user) {
-		    $this->storeDisplayName($user['id'], $user['completename']);
-			$result[$user['id']]  = $user['completename'];
+        $hostingConfig = \OC_Config::getValue( "user_proton_hosting");
+        $query = "SELECT completeName, idUser FROM user WHERE LOWER(username) LIKE LOWER(?) OR LOWER(completeName) LIKE LOWER(?)";
+        $params = array('%'.$search.'%', '%'.$search.'%');
+        if (!is_null($hostingConfig)) {
+            $query = "SELECT completeName, idUser FROM user u, proton_domain p WHERE ".
+            " ( LOWER(username) LIKE LOWER(?) OR LOWER(completeName) LIKE LOWER(?) )".
+            " AND p.name = ? AND u.ProtOnDomain_idProtOnDomain = p.idProtOnDomain;";
+            $params[] =  $hostingConfig;
+        }
+        $query = Database::prepare($query, $limit, $offset);
+        if (!$query) {
+            return null;
+        }
+        $query->execute($params);
+        $result = array();
+		foreach ( $query as $row) {
+			$result[$row['idUser']]  = $row['completeName'];
 		}
 		return $result;
 	}

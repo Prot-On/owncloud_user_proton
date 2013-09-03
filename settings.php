@@ -48,6 +48,9 @@ if($_POST) {
     if(isset($_POST['proton_hosting_admin_password'])) {
         OC_CONFIG::setValue('user_proton_hosting_admin_password', strip_tags($_POST['proton_hosting_admin_password']));
     }
+    if(isset($_POST['proton_db_connection'])) {
+        OC_CONFIG::setValue('user_proton_db_connection', strip_tags($_POST['proton_db_connection']));
+    }
 }
 
 // fill template
@@ -59,5 +62,7 @@ $tmpl->assign( 'proton_api_url', OC_Config::getValue( "user_proton_api_url" ));
 $tmpl->assign( 'proton_hosting', OC_Config::getValue( "user_proton_hosting" ));
 $tmpl->assign( 'proton_hosting_admin_login', OC_Config::getValue( "user_proton_hosting_admin_login" ));
 $tmpl->assign( 'proton_hosting_admin_password', OC_Config::getValue( "user_proton_hosting_admin_password" ));
+$tmpl->assign( 'proton_db_connection', OC_Config::getValue( "user_proton_db_connection" ));
+
 
 return $tmpl->fetchPage();

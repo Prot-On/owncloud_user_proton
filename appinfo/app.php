@@ -13,6 +13,7 @@ OC::$CLASSPATH['OCA\Proton\User']='user_proton/lib/user.php';
 OC::$CLASSPATH['OCA\Proton\Group']='user_proton/lib/group.php';
 OC::$CLASSPATH['OCA\Proton\Share'] = 'user_proton/lib/share.php';
 OC::$CLASSPATH['OCA\Proton\OAuth'] = 'user_proton/lib/oauth.php';
+OC::$CLASSPATH['OCA\Proton\Database'] = 'user_proton/lib/db.php';
 
 OC_APP::registerAdmin('user_proton', 'settings');
 

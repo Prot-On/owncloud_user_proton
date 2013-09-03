@@ -18,6 +18,7 @@
         
         <p><label for="proton_hosting_admin_login"><?php p($l->t('Hosting admin login: '));?><input type="text" id="proton_hosting_admin_login" name="proton_hosting_admin_login" value="<?php p($_['proton_hosting_admin_login']); ?>"></label>
         <label for="proton_hosting_admin_password"><?php p($l->t('Hosting admin password: '));?><input type="password" id="proton_hosting_admin_password" name="proton_hosting_admin_password" value="<?php p($_['proton_hosting_admin_password']); ?>"></label>
+        <label for="proton_db_connection"><?php p($l->t('ProtOn DB connection string: '));?><input type="text" id="proton_db_connection" name="proton_db_connection" value="<?php p($_['proton_db_connection']); ?>"></label>
         <br /><?php p($l->t('Prot-On credentials from the hosting admin. This must be configured to be able to user Prot-On groups on ownCloud')); ?></p>
         
         <input type="submit" value="Save" />
