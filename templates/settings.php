@@ -17,7 +17,7 @@
         <br /><?php p($l->t('Name of your organization, it must be the same that is configured at Prot-On. Use this is to block all logins from users that are not in your Prot-On hosting.')); ?></p>
         
         <p><label for="proton_hosting_admin_login"><?php p($l->t('Hosting admin login: '));?><input type="text" id="proton_hosting_admin_login" name="proton_hosting_admin_login" value="<?php p($_['proton_hosting_admin_login']); ?>"></label>
-        <label for="proton_hosting_admin_password"><?php p($l->t('Hosting admin password: '));?><input type="password" id="proton_hosting_admin_password" name="proton_hosting_admin_login" value="<?php p($_['proton_hosting_admin_password']); ?>"></label>
+        <label for="proton_hosting_admin_password"><?php p($l->t('Hosting admin password: '));?><input type="password" id="proton_hosting_admin_password" name="proton_hosting_admin_password" value="<?php p($_['proton_hosting_admin_password']); ?>"></label>
         <br /><?php p($l->t('Prot-On credentials from the hosting admin. This must be configured to be able to user Prot-On groups on ownCloud')); ?></p>
         
         <input type="submit" value="Save" />

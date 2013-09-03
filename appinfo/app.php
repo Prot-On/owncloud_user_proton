@@ -19,7 +19,7 @@ OC_APP::registerAdmin('user_proton', 'settings');
 if (\OCA\Proton\Util::isApiConfigured()) {
     OC_User::useBackend( new \OCA\Proton\User() );
     OC_Group::useBackend( new \OCA\Proton\Group() );
-    \OCP\Util::connectHook('OC_User', 'post_login', 'OC_USER_PROTON', 'postLogin');    
+    \OCP\Util::connectHook('OC_User', 'post_login', 'OCA\Proton\User', 'postLogin');    
 }
 
 \OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Proton\Share', 'postShared');

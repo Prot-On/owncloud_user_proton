@@ -3,8 +3,25 @@
 namespace OCA\Proton;
 
 class User extends \OC_User_Backend{
-	private static $username; //Hooks uses static functions so this should be static
-
+	private static $userId; //Hooks uses static functions so this should be static
+    private $userNameCache;
+    
+    public function __construct() {
+        $this->userNameCache = \OC_Cache::getGlobalCache();        
+    }     
+    
+    protected function getKey($uid) {
+        return hash( 'sha1', 'PROTON_USER_NAMES_'.$uid );
+    }
+    
+    protected function storeDisplayName($uid, $displayName) {
+        $this->userNameCache->set($this->getKey($uid), $displayName, 60*60*24);
+    } 
+    
+    protected function _getDisplayName($uid) {
+        return $this->userNameCache->get($this->getKey($uid));
+    }
+    
 	/**
 	 * @brief Check if the password is correct
 	 * @param $uid The username
@@ -24,18 +41,21 @@ class User extends \OC_User_Backend{
 			return false;
 		}
 		$info = json_decode($thing, true);
-        if (false) { //TODO Change this to check hosting
+        $hostingConfig = \OC_Config::getValue( "user_proton_hosting");
+        if (!empty($hostingConfig) && $hostingConfig !== $info['hostingname']) {
+            Util::log('The user '. $uid .' can not use OwnCloud due to Hosting retrictions');
             return false;
         }
 		Util::storeCompleteName($info['completename']);
-        self::$username = $info['username'];
+        $this->storeDisplayName($info['id'], $info['completename']);
+        self::$userId = $info['id'];
 		Util::storePassword($password);
 		return $uid;
 	}
 
-    public static function postLogin($uid, $password) {
-        if (isset(self::$username)) {
-            \OC_User::setUserid(self::$username);                   
+    public static function postLogin($uid, $password = '') {
+        if (isset(self::$userId)) {
+            \OC_User::setUserid(self::$userId);                   
         }
     }
 
@@ -48,11 +68,12 @@ class User extends \OC_User_Backend{
 		if (\OC_User::getUser() === $uid && Util::getCompleteName() != null) {
 			return Util::getCompleteName();
 		} else {
-			return $uid;
+			$display = $this->_getDisplayName($uid);
+            return $display;
 		}
 	}
-	
-	public function getUsers($search = '', $limit = null, $offset = null) {	
+
+	public function getDisplayNames($search = '', $limit = null, $offset = null) {
 		Util::log('Searching for users: '.$search.' limit '.$limit.' offset '.$offset);
 		try {
 			$pest = Util::getPest();
@@ -60,11 +81,12 @@ class User extends \OC_User_Backend{
 			Util::log('Exception: '.$e->getMessage());
 			return array();
 		}
-		$thing = $pest->get('/users/search/?pattern='.$search);
+		$thing = $pest->get('/users/?filter='.$search);
 		$users = json_decode($thing, true);
 		$result = array();
 		foreach ( $users as $user) {
-			$result[]  = $user['username'];
+		    $this->storeDisplayName($user['id'], $user['completename']);
+			$result[$user['id']]  = $user['completename'];
 		}
 		return $result;
 	}
