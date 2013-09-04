@@ -15,9 +15,6 @@ class Group extends \OC_Group_Backend {
                 "WHERE isCircleOfTrust = 0 AND m.User_idUser = ? AND m.Group_idGroup = idGroup ;";
         $params = array($uid);
         $query = Database::prepare($query);
-        if (!$query) {
-            return array();
-        }
         $query->execute($params);
         $result = array();
         foreach ( $query as $row) {
@@ -35,9 +32,6 @@ class Group extends \OC_Group_Backend {
             "AND (m.role = 0 OR g.visibility = 1 OR (g.visibility = 2 AND g.ProtOnDomain_idProtOnDomain = u.ProtOnDomain_idProtOnDomain)) ;";
         $params = array('%'.$search.'%', \OC_User::getUser(), \OC_User::getUser());
         $query = Database::prepare($query, $limit, $offset);
-        if (!$query) {
-            return array();
-        }
         $query->execute($params);
         $result = array();
         foreach ( $query as $row) {
@@ -54,30 +48,17 @@ class Group extends \OC_Group_Backend {
         }
     }
     
-    protected function getGroupId($gid) {
+    public static function getGroupId($gid) {
         $pieces = explode("<<", $gid);
         return $pieces[2];
     }
     
     public function groupExists($gid) {
-        return true;
+        $query = Database::prepare("SELECT idGroup FROM group_of_users g WHERE g.idGroup = ?");
+        $query->execute(array(self::getGroupId($gid)));
+        return ($query->fetch() !== false);
     }
     
-/*    
-    public function usersInGroup($gid, $search = '', $limit = -1, $offset = 0){
-        $key = $this->getKey('usersInGroup', func_get_args());
-        if ($this->cache->hasKey($key)) {
-            return $this->getCache($key);
-        }
-
-        Util::log('Find users in group '.$gid.' pattern:' . $search.' limit '.$limit.' offset '.$offset);
-        $return = array();
-        
-        $this->storeCache($key, $return);
-        return $return;        
-    }
-*/
-
 }
     
 

@@ -42,11 +42,11 @@ if($_POST) {
     if(isset($_POST['proton_hosting'])) {
         OC_CONFIG::setValue('user_proton_hosting', strip_tags($_POST['proton_hosting']));
     }
-    if(isset($_POST['proton_hosting_admin_login'])) {
-        OC_CONFIG::setValue('user_proton_hosting_admin_login', strip_tags($_POST['proton_hosting_admin_login']));
+    if(isset($_POST['proton_mysql_login'])) {
+        OC_CONFIG::setValue('user_proton_mysql_login', strip_tags($_POST['proton_mysql_login']));
     }
-    if(isset($_POST['proton_hosting_admin_password'])) {
-        OC_CONFIG::setValue('user_proton_hosting_admin_password', strip_tags($_POST['proton_hosting_admin_password']));
+    if(isset($_POST['proton_mysql_password'])) {
+        OC_CONFIG::setValue('user_proton_mysql_password', strip_tags($_POST['proton_mysql_password']));
     }
     if(isset($_POST['proton_db_connection'])) {
         OC_CONFIG::setValue('user_proton_db_connection', strip_tags($_POST['proton_db_connection']));
@@ -60,8 +60,8 @@ $tmpl->assign( 'proton_oauth_client_id', OC_Config::getValue( "user_proton_oauth
 $tmpl->assign( 'proton_oauth_secret', OC_Config::getValue( "user_proton_oauth_secret" ));
 $tmpl->assign( 'proton_api_url', OC_Config::getValue( "user_proton_api_url" ));
 $tmpl->assign( 'proton_hosting', OC_Config::getValue( "user_proton_hosting" ));
-$tmpl->assign( 'proton_hosting_admin_login', OC_Config::getValue( "user_proton_hosting_admin_login" ));
-$tmpl->assign( 'proton_hosting_admin_password', OC_Config::getValue( "user_proton_hosting_admin_password" ));
+$tmpl->assign( 'proton_mysql_login', OC_Config::getValue( "user_proton_mysql_login" ));
+$tmpl->assign( 'proton_mysql_password', OC_Config::getValue( "user_proton_mysql_password" ));
 $tmpl->assign( 'proton_db_connection', OC_Config::getValue( "user_proton_db_connection" ));
 
 

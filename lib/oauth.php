@@ -44,13 +44,11 @@ class OAuth {
             }
             
             Util::setToken($token);
-			Util::storeCompleteName($info['completename']);
 			$uid = $info['id'];
-			
 			
 			session_regenerate_id(true);
 			\OC_User::setUserid($uid);
-			\OC_User::setDisplayName($uid);
+			\OC_User::setDisplayName($uid, $info['completename']);
 			\OC_Hook::emit( "OC_User", "post_login", array( "uid" => $uid, 'password'=>'aaa' ));
 			\OC_Util::redirectToDefaultPage();
 		}

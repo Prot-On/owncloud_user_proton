@@ -8,8 +8,8 @@ class Database {
     
     public static function isDBConfigured() {
         return !is_null(\OC_CONFIG::getValue('user_proton_db_connection'))
-            && !is_null(\OC_Config::getValue( "user_proton_hosting_admin_login" ))
-            && !is_null(\OC_Config::getValue( "user_proton_hosting_admin_password" ));
+            && !is_null(\OC_Config::getValue( "user_proton_mysql_login" ))
+            && !is_null(\OC_Config::getValue( "user_proton_mysql_password" ));
     }
     
     public static function openConnection() {
