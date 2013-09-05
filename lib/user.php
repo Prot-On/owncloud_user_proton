@@ -17,7 +17,7 @@ class User extends \OC_User_Backend{
 		$pest = Util::getPest(false);
 		$pest->setupAuth($uid, $password);
 		try {
-		$thing = $pest->get('/users/userInfo');
+		  $thing = $pest->get('/users/userInfo');
 		} catch (Pest_Unauthorized $e) {
 			return false;
 		} catch (Pest_Forbidden $e) {
@@ -40,6 +40,23 @@ class User extends \OC_User_Backend{
             \OC_User::setUserid(self::$userId);
         }
     }
+    
+    public static function logout() {
+        session_unset();
+        session_destroy();
+        \OC_User::unsetMagicInCookie();
+        header("Location: " .  \OCP\Util::linkToRoute( 'proton_logout'));
+        die();
+    }
+    
+    public static function logoutController(){
+        \OCP\Util::addScript('user_proton', 'logout');
+        $tmpl = new \OC_Template( 'user_proton', 'logout', 'base');
+        $tmpl->assign( 'root', \OC::$WEBROOT);
+        $tmpl->assign( 'logout_url', \OC_Config::getValue( "user_proton_url" )); 
+        return $tmpl->printPage();
+    }
+    
     
     public function getDisplayName($uid) {
         return false;

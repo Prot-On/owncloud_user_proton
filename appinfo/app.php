@@ -24,8 +24,10 @@ OC::$CLASSPATH['OCA\Proton\Database'] = 'user_proton/lib/db.php';
 OC_APP::registerAdmin('user_proton', 'settings');
 
 if (\OCA\Proton\Util::isApiConfigured()) {
+    \OCP\Util::addscript( 'user_proton', 'login');
     OC_User::useBackend( new \OCA\Proton\User() );
     \OCP\Util::connectHook('OC_User', 'post_login', 'OCA\Proton\User', 'postLogin');
+    \OCP\Util::connectHook('OC_User', 'logout', 'OCA\Proton\User', 'logout');
 }
 
 if (\OCA\Proton\Database::isDBConfigured()) {

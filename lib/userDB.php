@@ -3,25 +3,70 @@
 namespace OCA\Proton;
 
 class UserDB extends \OC_User_Backend{
+    private $cache;
+    private $usersChecked = array();
+    
+    public function __construct() {
+        $this->cache = \OC_Cache::getGlobalCache();
+    }
+    
+    protected function getKey($method, $params) {
+        $elegible_args_values = '';
+ 
+        foreach( $params as $arg_value ){
+            if( is_scalar( $arg_value ) ){
+                $elegible_args_values .= $arg_value . '_';
+            } else {
+                $elegible_args_values .= sizeof( $arg_value ) . '_';
+            }
+        }
+ 
+        $hash_parts = 'PROTON_USERS_' . $method . '_' . $elegible_args_values;
+        return hash( 'sha1', $hash_parts );
+    }
+    
+    protected function storeCache($key, $value) {
+        $value = base64_encode(serialize($value));
+        $this->cache->set($key, $value, 60*30); //30 min caching
+    }
+    
+    protected function getCache($key) {
+        return unserialize(base64_decode($this->cache->get($key)));
+    }
+    
+    
 	public function userExists($uid) {
+	    if (isset($this->usersChecked[$uid])) {
+	        return $this->usersChecked[$uid];
+	    }
+        
         Util::log("userExists: " . $uid);
         $query = Database::prepare("SELECT idUser FROM user WHERE idUser = ?");
         if (!$query) {
             return false;
         }
         $query->execute(array($uid));
-        return ($query->fetch() !== false);
+        $result = ($query->fetch() !== false);
+        
+        $this->usersChecked[$uid] = $result; 
+        return $result;
 	}
 	
 	public function getDisplayName($uid) {
+        $key = $this->getKey('getDisplayName', func_get_args());
+        $result = $this->getCache($key);
+        if (!is_null($result)) {
+            return $result;
+        }
 		Util::log("getDisplayName: " . $uid);
         $query = Database::prepare("SELECT completeName FROM user WHERE idUser = ?");
-        if (!$query) {
-            return null;
-        }
         $query->execute(array($uid));
         $row = $query->fetch();
-        return $row['completeName'];    
+        $result = ($row !== false)?$row['completeName']: false;
+              
+        $this->storeCache($key, $result);
+        
+        return $result;    
 	}
 
 	public function getDisplayNames($search = '', $limit = null, $offset = null) {
