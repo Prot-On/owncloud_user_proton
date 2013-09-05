@@ -4,15 +4,7 @@ if (!in_array('curl', get_loaded_extensions())) {
     return false;
 }
 
-
-if (!OCP\App::isEnabled('files_proton')) {
-	$dir = dirname(dirname(__FILE__)).'/common/3rdparty';
-	set_include_path(get_include_path() . PATH_SEPARATOR . $dir);
-	
-	OC::$CLASSPATH['Pest']='user_proton/common/3rdparty/Pest/Pest.php';
-	OC::$CLASSPATH['OCA\Proton\Util'] = 'user_proton/common/lib/util.php';
-	OC::$CLASSPATH['OCA\Proton\BearerPest']='user_proton/common/lib/bearer_pest.php';
-}
+include_once 'apps/user_proton/common/includes.php';
 	
 OC::$CLASSPATH['OCA\Proton\User']='user_proton/lib/user.php';
 OC::$CLASSPATH['OCA\Proton\UserDB']='user_proton/lib/userDB.php';
