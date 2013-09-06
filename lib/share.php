@@ -46,8 +46,7 @@ class Share {
             return $result['docId'];
         }
         
-        $path = \OC\Files\Filesystem::getPath($fileId);
-        $temp = Util::toTmpFile(dirname($path) . '/' . basename($path));
+        $temp = Util::toTmpFile($fileId);
         
         $pest = Util::getPest();
         $thing = $pest->post('/documents/getInfo', array("file" => "@".$temp));
