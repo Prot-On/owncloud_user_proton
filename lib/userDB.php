@@ -55,10 +55,9 @@ class UserDB extends \OC_User_Backend{
 	public function getDisplayName($uid) {
         $key = $this->getKey('getDisplayName', func_get_args());
         $result = $this->getCache($key);
-        if (!is_null($result)) {
+        if (!is_null($result) && $result !== false) {
             return $result;
         }
-		Util::log("getDisplayName: " . $uid);
         $query = Database::prepare("SELECT completeName FROM user WHERE idUser = ?");
         $query->execute(array($uid));
         $row = $query->fetch();
