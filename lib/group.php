@@ -34,11 +34,17 @@ class Group extends \OC_Group_Backend {
     }
     
     public function inGroup($uid, $gid) {
+        if (!Util::checkProtOnUser()) {
+            return null;
+        }
         Util::log('Check if '.$uid.' is inside '.$gid);
         return in_array($gid, $this->getUserGroups($uid));
     }
      
     public function getUserGroups($uid) {
+        if (!Util::checkProtOnUser()) {
+            return array();
+        }
         $key = $this->getKey('getUserGroups', func_get_args());
         $result = $this->getCache($key);
         if (is_array($result)) {

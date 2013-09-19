@@ -27,7 +27,7 @@ class Database {
     }
     
     public static function prepare($query, $limit = null, $offset = null) {
-        Util::log("Querying: " . $query);
+        //Util::log("Querying: " . $query);
         self::openConnection();
         if (is_numeric($limit) && $limit != -1) {
             //PDO does not handle limit and offset.

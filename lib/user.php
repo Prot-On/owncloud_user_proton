@@ -17,11 +17,9 @@ class User extends \OC_User_Backend{
 		$pest = Util::getPest(false);
 		$pest->setupAuth($uid, $password);
 		try {
-		  $thing = $pest->get('/users/userInfo');
-		} catch (Pest_Unauthorized $e) {
-			return false;
-		} catch (Pest_Forbidden $e) {
-			return false;
+            $thing = $pest->get('/users/userInfo');
+		} catch (\Exception $e) {
+            return null;		    
 		}
 		$info = json_decode($thing, true);
         $hostingConfig = \OC_Config::getValue( "user_proton_hosting");
@@ -38,6 +36,7 @@ class User extends \OC_User_Backend{
         if (isset(self::$userId)) {
             Util::log('Post login');
             \OC_User::setUserid(self::$userId);
+            Util::markProtOnUser();
         }
     }
     
