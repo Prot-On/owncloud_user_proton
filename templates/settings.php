@@ -24,7 +24,7 @@ if (!OCP\App::isEnabled('files_proton')) {
         <br /><br />
         
         <p><label for="proton_mysql_login"><?php p($l->t('ProtOn DB user: '));?><input type="text" id="proton_mysql_login" name="proton_mysql_login" value="<?php p($_['proton_mysql_login']); ?>"></label>
-        <label for="proton_mysql_password"><?php p($l->t('ProtOn DB login: '));?><input type="password" id="proton_mysql_password" name="proton_mysql_password" value="<?php p($_['proton_mysql_password']); ?>"></label>
+        <label for="proton_mysql_password"><?php p($l->t('ProtOn DB password: '));?><input type="password" id="proton_mysql_password" name="proton_mysql_password" value="<?php p($_['proton_mysql_password']); ?>"></label>
         <label for="proton_db_connection"><?php p($l->t('ProtOn DB connection string: '));?><input type="text" id="proton_db_connection" name="proton_db_connection" value="<?php p($_['proton_db_connection']); ?>"></label>
         <br /><?php p($l->t('Prot-On credentials from the hosting admin. This must be configured to be able to user Prot-On groups on ownCloud')); ?></p>
         

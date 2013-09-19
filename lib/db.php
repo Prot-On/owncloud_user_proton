@@ -18,7 +18,7 @@ class Database {
                 throw new \Exception("Database not configured");
             }
             try {
-                self::$db = new \PDO(\OC_CONFIG::getValue('user_proton_db_connection'), \OC_CONFIG::getValue('user_proton_hosting_admin_login'), \OC_CONFIG::getValue('user_proton_hosting_admin_password'));            
+                self::$db = new \PDO(\OC_CONFIG::getValue('user_proton_db_connection'), \OC_CONFIG::getValue('user_proton_mysql_login'), \OC_CONFIG::getValue('user_proton_mysql_password'));            
             } catch (PDOException $e) {
                 Util::log("Error db: " . $e->getMessage());
                 die();
