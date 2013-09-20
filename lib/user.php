@@ -30,14 +30,16 @@ class User extends \OC_User_Backend{
         }
         self::$userId = $info['id'];
 		Util::storePassword($password);
+        Util::storeUser($uid);
+        Util::storeCompleteName($info['completename']);
 		return $uid;
 	}
 
     public static function postLogin($uid, $password = '') {
         if (isset(self::$userId)) {
             Util::log('Post login');
-            \OC_User::setUserid(self::$userId);
             Util::markProtOnUser();
+            \OC_User::setUserid(self::$userId);
         }
     }
     
@@ -59,7 +61,16 @@ class User extends \OC_User_Backend{
     
     
     public function getDisplayName($uid) {
+        if ($uid == \OC_User::getUser() && Util::checkProtOnUser()) {
+            return Util::getCompleteName();
+        }
         return false;
     }
     
+    public function userExists($uid) {
+        if ($uid == \OC_User::getUser() && Util::checkProtOnUser()) {
+            return true;
+        }
+        return null;
+    }
 }

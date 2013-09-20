@@ -7,9 +7,9 @@ class Database {
     static $db;
     
     public static function isDBConfigured() {
-        return !is_null(\OC_Config::getValue('user_proton_db_connection'))
-            && !is_null(\OC_Config::getValue( "user_proton_mysql_login" ))
-            && !is_null(\OC_Config::getValue( "user_proton_mysql_password" ));
+        return (\OC_Config::getValue('user_proton_db_connection'))
+            && (\OC_Config::getValue( "user_proton_mysql_login" ))
+            && (\OC_Config::getValue( "user_proton_mysql_password" ));
     }
     
     public static function openConnection() {
