@@ -19,6 +19,7 @@ class User extends \OC_User_Backend{
 		try {
             $thing = $pest->get('/users/userInfo');
 		} catch (\Exception $e) {
+		    Util::log('Excepcion '.$e);
             return null;		    
 		}
 		$info = json_decode($thing, true);
