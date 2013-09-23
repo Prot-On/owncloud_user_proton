@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <info>
 	<id>user_proton</id>
-	<name>Prot-On User Backend</name>
-	<description>Integrate with Prot-On server</description>
-	<licence>AGPL</licence>
-	<author>Ramiro Aparicio</author>
+	<name>Prot-On User and Group Backend</name>
+	<description>Integrate users and groups with Prot-On server, It allows regular login, OAuth login, group sharing, hosting restriction and automatically give permission to the group or user you share to.</description>
+	<version>0.1</version>
+	<licence>APL</licence>
+	<author>Proteccion Online, SL - info@prot-on.com</author>
 	<require>4.93</require>
 	<shipped>false</shipped>
 	<types>
