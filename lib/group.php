@@ -92,10 +92,10 @@ class Group extends \OC_Group_Backend {
     
     public function getGroups($search = '', $limit = -1, $offset = 0) {
         Util::log('Searching for groups: '.$search.' limit '.$limit.' offset '.$offset);
-        $query = "SELECT groupname, idGroup, isDomainGroup, u2.username as creator, p.name as domain". 
-            "FROM group_of_users g LEFT JOIN user u2 ON (u2.idUser = g.User_idUser) LEFT JOIN proton_domain p ON (p.idProtOnDomain = g.ProtOnDomain_idProtOnDomain), group_membership m , user u". 
-            "WHERE LOWER(groupname) LIKE LOWER(?) AND isCircleOfTrust = 0". 
-            "AND m.Group_idGroup = idGroup AND u.idUser = ?". 
+        $query = "SELECT groupname, idGroup, isDomainGroup, u2.username as creator, p.name as domain ". 
+            "FROM group_of_users g LEFT JOIN user u2 ON (u2.idUser = g.User_idUser) LEFT JOIN proton_domain p ON (p.idProtOnDomain = g.ProtOnDomain_idProtOnDomain), group_membership m , user u ". 
+            "WHERE LOWER(groupname) LIKE LOWER(?) AND isCircleOfTrust = 0 ". 
+            "AND m.Group_idGroup = idGroup AND u.idUser = ? ". 
             "AND ((m.User_idUser = ? AND m.role = 0) OR g.visibility = 1 OR (g.visibility = 2 AND g.ProtOnDomain_idProtOnDomain = u.ProtOnDomain_idProtOnDomain)) GROUP BY (idGroup) ;";
         $params = array('%'.$search.'%', \OC_User::getUser(), \OC_User::getUser());
         $query = Database::prepare($query, $limit, $offset);
