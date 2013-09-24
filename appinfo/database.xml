@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+ <name>*dbname*</name>
+ <create>true</create>
+ <overwrite>false</overwrite>
+ <charset>utf8</charset>
+ <table>
+  <name>*dbprefix*proton_docid</name>
+  <declaration>
+    <field>
+      <name>fileId</name>
+      <type>integer</type>
+      <notnull>true</notnull>
+      <length>11</length>
+    </field>
+    <field>
+      <name>docId</name>
+      <type>integer</type>
+      <notnull>false</notnull>
+      <length>11</length>
+    </field>
+    <field>
+      <name>xDocId</name>
+      <type>text</type>
+      <notnull>false</notnull>
+      <length>255</length>
+    </field>
+    
+   <index>
+	   <name>fileIndex</name>
+	   <field>
+		   <name>fileId</name>
+		   <sorting>ascending</sorting>
+	   </field>
+   </index>
+    
+  </declaration>
+</table>
+</database>

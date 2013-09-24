@@ -20,4 +20,4 @@
  *
  */
 
-setTimeout(function() { location.href= $('#url').val(); }, 0);
+setTimeout(function() { location.href= $('#url').val(); }, 100);

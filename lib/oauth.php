@@ -74,8 +74,8 @@ class OAuth {
 			\OC_User::setDisplayName($uid, $info['completename']);
 			\OC_Hook::emit( "OC_User", "post_login", array( "uid" => $uid, 'password'=>'aaa' ));
 			\OC_User::unsetMagicInCookie(); //Disable remember me
-			\OC_Util::redirectToDefaultPage();
             Util::markProtOnUser();
+			\OC_Util::redirectToDefaultPage();
 		}
     }
 }
