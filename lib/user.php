@@ -67,6 +67,9 @@ class User extends \OC_User_Backend{
     }
     
     public static function logout() {
+        if (strpos($_SERVER['REQUEST_URI'],  '/ocs/') === 0){ //Hack to avoid redirecting on OCS request as they logout after every request
+                return;
+        }
         session_unset();
         session_destroy();
         \OC_User::unsetMagicInCookie();
