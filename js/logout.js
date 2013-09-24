@@ -19,5 +19,14 @@
  *
  *
  */
-
-setTimeout(function() { location.href= $('#url').val(); }, 100);
+$(document).ready(function(){
+    var ifr=$('<iframe/>', {
+            id:'MainPopupIframe',
+            src:$('#logout_url').val(),
+            style:'display:none',
+            load:function(){
+                location.href= $('#url').val();
+            }
+    });
+    $('body').append(ifr); 	
+});

@@ -81,7 +81,7 @@ class User extends \OC_User_Backend{
         \OCP\Util::addScript('user_proton', 'logout');
         $tmpl = new \OC_Template( 'user_proton', 'logout', 'base');
         $tmpl->assign( 'root', \OC::$WEBROOT);
-        $tmpl->assign( 'logout_url', \OC_Config::getValue( "user_proton_url" )); 
+        $tmpl->assign( 'logout_url', str_replace('//','/', \OC_Config::getValue( "user_proton_url" ).'/logout')); 
         return $tmpl->printPage();
     }
     
