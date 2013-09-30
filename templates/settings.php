@@ -18,7 +18,7 @@ if (!OCP\App::isEnabled('files_proton')) {
 }
 ?>      
 
-        <p><label for="proton_hosting"><?php p($l->t('Hosting name: '));?><input type="text" id="proton_hosting" name="proton_hosting" value="<?php p($_['proton_hosting']); ?>"></label>
+        <p><label for="proton_hosting"><?php p($l->t('Organization name: '));?><input type="text" id="proton_hosting" name="proton_hosting" value="<?php p($_['proton_hosting']); ?>"></label>
         </p>
         <?php p($l->t('Name of your organization, it must be the same that is configured at Prot-On. Use this is to block all logins from users that are not in your Prot-On hosting.')); ?>
         <br /><br />

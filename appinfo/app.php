@@ -28,8 +28,10 @@ if (!in_array('curl', get_loaded_extensions())) {
     return false;
 }
 
-include_once 'apps/user_proton/common/includes.php';
-proton_include('user_proton');
+if (!function_exists('proton_include')) {
+    include_once 'apps/user_proton/common/includes.php';
+    proton_include('user_proton');
+}
 	
 OC::$CLASSPATH['OCA\Proton\User']='user_proton/lib/user.php';
 OC::$CLASSPATH['OCA\Proton\UserDB']='user_proton/lib/userDB.php';
