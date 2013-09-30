@@ -35,11 +35,12 @@ Indeed if restApi is also configured and the file shared is a Prot-On file then 
 **Note:** If your company uses LDAP and you don't want to automatically manage permissions or groups integration then you can avoid this app and just use Owncloud LDAP application, otherwise configure LDAP on Prot-On and use this app.
 
 For a company with their own on Premise Prot-On server it is recomended to set everything except the Organization name (including custom oAuth).
-For a setup against the public Prot-On server it is recomended to set Organization, API, Url and default oAuth.
+For a setup against the public Prot-On server it is recomended to set Organization and API to enable login with Prot-On credentials. If you want to use oAuth and/or user/group sharing then please contact us so we can provide you with the needed credentials.
 
-### Creation of user for database integration
+### Creation of user for database integration with on Premise server
 
-Use this script, change own_user and own_pass with your desired user and password.
+Use this script to allow remote access to your Prot-On database (only gives read access to 4 tables), use this with your Prot-On database (not Owncloud).
+Change own_user and own_pass with your desired user and password.
 
 ```sql
 CREATE USER 'own_user'@'%' IDENTIFIED BY 'own_pass';
