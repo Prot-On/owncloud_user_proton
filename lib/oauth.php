@@ -62,7 +62,7 @@ class OAuth {
 			$info = json_decode($thing, true);
             $hostingConfig = \OC_Config::getValue( "user_proton_hosting");
             if (!empty($hostingConfig) && $hostingConfig !== $info['hostingname']) {
-                echo "The current logged user can not use OwnCloud due to Hosting retrictions";
+                echo "The current logged user can not use OwnCloud due to Enterprise retrictions";
                 return;
             }
             

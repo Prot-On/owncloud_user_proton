@@ -48,7 +48,7 @@ class User extends \OC_User_Backend{
 		$info = json_decode($thing, true);
         $hostingConfig = \OC_Config::getValue( "user_proton_hosting");
         if (!empty($hostingConfig) && $hostingConfig !== $info['hostingname']) {
-            Util::log('The user '. $uid .' can not use OwnCloud due to Hosting retrictions');
+            Util::log('The user '. $uid .' can not use OwnCloud due to Enterprise retrictions');
             return false;
         }
         self::$userId = $info['id'];
