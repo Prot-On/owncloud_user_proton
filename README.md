@@ -27,7 +27,7 @@ There are several configurations depending of your use case.
 
 * If you configure a restAPI url it will allow you to log in with your Prot-On credentials in the web or Owncloud clients, also if you provide oAuth data and Prot-On url this will add a new button on login page to login via oAuth providing a simple SSO.
 
-* If you configure a Organization name this will block any login attempt from users that are not inside that organization, this is usefull when working with Prot-On main server instead of a Prot-On on Premise Server.
+* If you configure a Enterprise name this will block any login attempt from users that are not inside that organization, this is usefull when working with Prot-On main server instead of a Prot-On on Premise Server.
 
 The last thing that can be configured is database credentials, those should be a credentials valid to connect to Prot-On database if this is setted you will be able to search users and groups from Prot-On to share with them files inside Owncloud.
 Indeed if restApi is also configured and the file shared is a Prot-On file then the app will automatically give the shared with user or group permissions to that file (the same premissions you give them in Owncloud).
@@ -35,7 +35,7 @@ Indeed if restApi is also configured and the file shared is a Prot-On file then 
 **Note:** If your company uses LDAP and you don't want to automatically manage permissions or groups integration then you can avoid this app and just use Owncloud LDAP application, otherwise configure LDAP on Prot-On and use this app.
 
 For a company with their own on Premise Prot-On server it is recomended to set everything except the Organization name (including custom oAuth).
-For a setup against the public Prot-On server it is recomended to set Organization and API to enable login with Prot-On credentials. If you want to use oAuth and/or user/group sharing then please contact us so we can provide you with the needed credentials.
+For a setup against the public Prot-On server it is recomended to set Enterprises and API to enable login with Prot-On credentials. If you want to use oAuth and/or user/group sharing then please contact us so we can provide you with the needed credentials.
 
 ### Creation of user for database integration with on Premise server
 
