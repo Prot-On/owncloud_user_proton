@@ -50,7 +50,11 @@ class OAuth {
 			header('Location: ' . $auth_url);
 			die('Redirect');
 		} else {
-			$params = array('code' => $_GET['code'], 'redirect_uri' => \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth')));
+            $redirect_url = \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth'));
+            if ($_GET['redirect_url']) {
+                $redirect_url .= "?redirect_url=".urlencode($_GET['redirect_url']);     
+            }
+			$params = array('code' => $_GET['code'], 'redirect_uri' => $redirect_url);
             Util::log("Code retrieved: ".$_GET['code']);
 			$response = $client->getAccessToken(\OC_Config::getValue( "user_proton_url" ).self::TOKEN_ENDPOINT, 'authorization_code', $params);
 			$token = Util::parseOAuthTokenResponse($response);
