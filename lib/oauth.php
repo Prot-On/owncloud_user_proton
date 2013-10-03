@@ -42,7 +42,11 @@ class OAuth {
         }
 		$client = new \OAuth2\Client(\OC_Config::getValue( "user_proton_oauth_client_id" ), \OC_Config::getValue( "user_proton_oauth_secret" ), \OAuth2\Client::AUTH_TYPE_AUTHORIZATION_BASIC);
 		if (!isset($_GET['code'])) {
-			$auth_url = $client->getAuthenticationUrl(\OC_Config::getValue( "user_proton_url" ).self::AUTHORIZATION_ENDPOINT, \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth')));
+		    $redirect_url = \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth'));
+            if ($_GET['redirect_url']) {
+                $redirect_url .= "?redirect_url=".urlencode($_GET['redirect_url']);     
+            }
+			$auth_url = $client->getAuthenticationUrl(\OC_Config::getValue( "user_proton_url" ).self::AUTHORIZATION_ENDPOINT, $redirect_url);
 			header('Location: ' . $auth_url);
 			die('Redirect');
 		} else {
@@ -75,7 +79,7 @@ class OAuth {
 			\OC_Hook::emit( "OC_User", "post_login", array( "uid" => $uid, 'password'=>'aaa' ));
 			\OC_User::unsetMagicInCookie(); //Disable remember me
             Util::markProtOnUser();
-			\OC_Util::redirectToDefaultPage();
+            \OC_Util::redirectToDefaultPage();              
 		}
     }
 }
