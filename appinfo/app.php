@@ -41,7 +41,6 @@ OC::$CLASSPATH['OCA\Proton\OAuth'] = 'user_proton/lib/oauth.php';
 OC::$CLASSPATH['OCA\Proton\Database'] = 'user_proton/lib/db.php';
 
 OC_APP::registerAdmin('user_proton', 'settings');
-\OCP\Util::addscript( 'user_proton', 'login');
 
 if (\OCA\Proton\Util::isApiConfigured()) {
 //    \OCA\Proton\Util::log("Loaded API dependencies");

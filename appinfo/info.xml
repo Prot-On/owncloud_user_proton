@@ -6,8 +6,9 @@
 	<version>0.1</version>
 	<licence>APL</licence>
 	<author>Proteccion Online, SL - info@prot-on.com</author>
-	<require>4.93</require>
+	<require>5.0.12</require>
 	<shipped>false</shipped>
+	<rememberlogin>false</rememberlogin>
 	<types>
 		<authentication/>
 	</types>
