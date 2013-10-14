@@ -50,6 +50,21 @@ GRANT SELECT ON protonks.proton_domain TO 'own_user'@'%';
 GRANT SELECT ON protonks.group_membership TO 'own_user'@'%';
 ```
 
+
+### Configure oAuth as the default login method ###
+
+If you have configured the oAuth details for login you can redirect the main page to the oAuth login while enabling another alias for the default login.
+To do this just add this to your rewrite rules in the .htaccess under your owncloud dir (in this example the standard login will be at "/adminLogin").
+
+```
+RewriteRule ^$ /index.php/apps/user_proton/init [R]
+
+RewriteCond %{QUERY_STRING} redirect_url=
+RewriteRule ^index.php$ /index.php/apps/user_proton/init [R]
+
+RewriteRule ^adminLogin$ /index.php [PT]
+```
+
 ## Support
 
 
