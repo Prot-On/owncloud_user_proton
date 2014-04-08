@@ -43,7 +43,7 @@ class OAuth {
 		$client = new \OAuth2\Client(\OC_Config::getValue( "user_proton_oauth_client_id" ), \OC_Config::getValue( "user_proton_oauth_secret" ), \OAuth2\Client::AUTH_TYPE_AUTHORIZATION_BASIC);
 		if (!isset($_GET['code'])) {
 		    $redirect_url = \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth'));
-            if ($_GET['redirect_url']) {
+            if (isset($_GET['redirect_url']) && $_GET['redirect_url']) {
                 $redirect_url .= "?redirect_url=".urlencode($_GET['redirect_url']);     
             }
 			$auth_url = $client->getAuthenticationUrl(\OC_Config::getValue( "user_proton_url" ).self::AUTHORIZATION_ENDPOINT, $redirect_url);
@@ -51,7 +51,7 @@ class OAuth {
 			die('Redirect');
 		} else {
             $redirect_url = \OC_Helper::makeURLAbsolute(\OCP\Util::linkToRoute( 'proton_oauth'));
-            if ($_GET['redirect_url']) {
+            if (isset($_GET['redirect_url']) && $_GET['redirect_url']) {
                 $redirect_url .= "?redirect_url=".urlencode($_GET['redirect_url']);     
             }
 			$params = array('code' => $_GET['code'], 'redirect_uri' => $redirect_url);
@@ -75,7 +75,7 @@ class OAuth {
             }
             
             Util::setToken($token);
-			$uid = $info['id'];
+			$uid = $info['id']."";
 			
 			session_regenerate_id(true);
 			\OC_User::setUserid($uid);

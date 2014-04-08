@@ -51,7 +51,7 @@ class User extends \OC_User_Backend{
             Util::log('The user '. $uid .' can not use OwnCloud due to Enterprise retrictions');
             return false;
         }
-        self::$userId = $info['id'];
+        self::$userId = $info['id']."";
 		Util::storePassword($password);
         Util::storeUser($uid);
         Util::storeCompleteName($info['completename']);
