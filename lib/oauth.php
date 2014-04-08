@@ -83,6 +83,7 @@ class OAuth {
 			\OC_Hook::emit( "OC_User", "post_login", array( "uid" => $uid, 'password'=>'aaa' ));
 			\OC_User::unsetMagicInCookie(); //Disable remember me
             Util::markProtOnUser();
+	        Util::storeCompleteName($info['completename']);
             \OC_Util::redirectToDefaultPage();              
 		}
     }
