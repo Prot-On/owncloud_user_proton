@@ -123,7 +123,7 @@ class Group extends \OC_Group_Backend {
     
     public static function getGroupId($gid) {
         $pieces = explode("<<", $gid);
-        return $pieces[2];
+        return (sizeof($pieces) > 2)?$pieces[2]:null;
     }
     
     public function groupExists($gid) {

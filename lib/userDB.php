@@ -98,7 +98,7 @@ class UserDB extends \OC_User_Backend{
         if (!is_null($hostingConfig)) {
             $query = "SELECT completeName, idUser FROM user u, proton_domain p WHERE ".
             " ( LOWER(username) LIKE LOWER(?) OR LOWER(completeName) LIKE LOWER(?) )".
-            " AND p.name = ? AND u.ProtOnDomain_idProtOnDomain = p.idProtOnDomain;";
+            " AND p.alias = ? AND u.ProtOnDomain_idProtOnDomain = p.idProtOnDomain;";
             $params[] =  $hostingConfig;
         }
         $query = Database::prepare($query, $limit, $offset);
