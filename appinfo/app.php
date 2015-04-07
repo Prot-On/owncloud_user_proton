@@ -4,6 +4,7 @@
  * ownCloud - ProtOn user plugin
  *
  * @author Ramiro Aparicio
+ * @author Santiago Cuenca Lizcano
  * @copyright 2013 Protección Online, S.L. info@prot-on.com
  *
  *
@@ -67,5 +68,6 @@ if (\OCA\Proton\Database::isDBConfigured()
 if (\OCA\Proton\Util::isOAuthConfigured()) {
 //    \OCA\Proton\Util::log("Loaded OAuth dependencies");
     OC_App::registerLogIn(array('href' => \OCP\Util::linkToRoute( 'proton_oauth'), 'name' => 'Prot-On OAuth'));
+    OCP\Util::addStyle('user_proton', 'proton');
 }
 

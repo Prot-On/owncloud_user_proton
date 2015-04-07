@@ -5,6 +5,7 @@
  * ownCloud - ProtOn user plugin
  *
  * @author Ramiro Aparicio
+ * @author Santiago Cuenca Lizcano
  * @copyright 2013 Protección Online, S.L. info@prot-on.com
  *
  *
@@ -67,7 +68,8 @@ class User extends \OC_User_Backend{
     }
     
     public static function logout() {
-        if (strpos($_SERVER['REQUEST_URI'],  '/ocs/') === 0){ //Hack to avoid redirecting on OCS request as they logout after every request
+        $uriParts = explode("/", $_SERVER['REQUEST_URI']);
+        if (in_array('ocs', $uriParts)){ //Hack to avoid redirecting on OCS request as they logout after every request
                 return;
         }
         session_unset();
