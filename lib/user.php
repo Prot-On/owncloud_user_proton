@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * ownCloud - ProtOn user plugin
  *
